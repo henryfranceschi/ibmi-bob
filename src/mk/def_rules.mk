@@ -211,6 +211,9 @@ endif
 ifndef VLDCKR
 VLDCKR :=
 endif
+ifndef PMTOVRPGM
+PMTOVRPGM :=
+endif
 
 TGTCCSID = $(TGTCCSID_$($@_d))
 
@@ -266,6 +269,7 @@ CMD_HLPPNLGRP = $(basename $@)
 CMD_PGM = $(basename $@)
 CMD_PMTFILE := *NONE
 CMD_VLDCKR := *NONE
+CMD_PMTOVRPGM := *NONE
 
 CMOD_AUT := $(AUT)
 CMOD_DEFINE := $(DEFINE)
@@ -406,7 +410,8 @@ WSCST_AUT := $(AUT)
 
 # Creation command parameters with variables (the ones listed at the top) for the most common ones.
 CRTCLMODFLAGS = AUT($(AUT)) DBGVIEW($(DBGVIEW)) OPTIMIZE($(OPTIMIZE)) OPTION($(OPTION)) TEXT('$(TEXT)') TGTRLS($(TGTRLS)) INCDIR($(INCDIR))
-CRTCMDFLAGS = PGM($(PGM)) VLDCKR($(VLDCKR)) PMTFILE($(PMTFILE)) HLPPNLGRP($(HLPPNLGRP)) HLPID($(HLPID)) AUT($(AUT)) ALLOW($(ALLOW)) TEXT('$(TEXT)')
+CRTCMDFLAGS = PGM($(PGM)) VLDCKR($(VLDCKR)) PMTFILE($(PMTFILE)) HLPPNLGRP($(HLPPNLGRP)) HLPID($(HLPID)) AUT($(AUT)) ALLOW($(ALLOW)) TEXT('$(TEXT)') \
+			  PMTOVRPGM($(PMTOVRPGM))
 CRTCMODFLAGS = TERASPACE($(TERASPACE)) STGMDL($(STGMDL)) OUTPUT(*PRINT) OPTION($(OPTION)) DBGVIEW($(DBGVIEW)) OPTIMIZE($(OPTIMIZE)) \
                SYSIFCOPT($(SYSIFCOPT)) AUT($(AUT)) TEXT('$(TEXT)') TGTCCSID($(TGTCCSID)) TGTRLS($(TGTRLS)) INLINE($(INLINE)) INCDIR($(INCDIR)) \
                LOCALETYPE($(LOCALETYPE)) DEFINE($(DEFINE))
@@ -966,6 +971,7 @@ define CMDSRC_TO_CMD_RECIPE =
     $(eval PGM = $(OBJLIB)/$(CMD_PGM))
 	$(eval PMTFILE = $(CMD_PMTFILE))
 	$(eval VLDCKR = $(CMD_VLDCKR))
+	$(eval PMTOVRPGM = $(CMD_PMTOVRPGM))
 	$(eval d = $($@_d))
 	@$(call echo_cmd,"=== Creating command [$(notdir $<)] in $(OBJLIB)")
 	$(eval crtcmd := CRTCMD CMD($(OBJLIB)/$(basename $(@F))) srcstmf('$<') $(CRTCMDFLAGS))
@@ -980,6 +986,7 @@ define CMD_TO_CMD_RECIPE =
     $(eval PGM = $(OBJLIB)/$(CMD_PGM))
 	$(eval PMTFILE = $(CMD_PMTFILE))
 	$(eval VLDCKR = $(CMD_VLDCKR))
+	$(eval PMTOVRPGM = $(CMD_PMTOVRPGM))
 	$(eval d = $($@_d))
 	@$(call echo_cmd,"=== Creating command [$(notdir $<)] in $(OBJLIB)")
 	$(eval crtcmd := CRTCMD CMD($(OBJLIB)/$(basename $(@F))) srcstmf('$<') $(CRTCMDFLAGS))
